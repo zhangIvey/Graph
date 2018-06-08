@@ -10,6 +10,22 @@
 
 @implementation GraduationLayer
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _scalexX = [NSArray arrayWithObjects:@"2-1",@"2-2",@"2-3",@"2-4",@"2-5",@"2-6",@"2-7",@"2-8",@"2-9", nil];
+    }
+    return self;
+}
+
+
+-(void)setScalexX:(NSArray *)scalexX
+{
+    self.scalexX = scalexX;
+    [self setNeedsDisplay];
+}
+
 /**
  绘制横坐标
 
@@ -21,7 +37,6 @@
     //添加轴
     [self drawX:ctx];
 
-
     //添加刻度
     float scaleLabelWidth = self.bounds.size.width/[scales count];
     float scaleLabelHeith = 40;
@@ -29,8 +44,6 @@
         CGRect rect = CGRectMake(i*scaleLabelWidth, self.bounds.size.height - 40, scaleLabelWidth, scaleLabelHeith);
         [self addSublayer:[self scaleLabelInit:rect scale:(NSString *)[scales objectAtIndex:i]]];
     }
-
-
 
 }
 
@@ -86,8 +99,7 @@
 - (void)drawInContext:(CGContextRef)ctx
 {
 
-    NSArray *array = [NSArray arrayWithObjects:@"2-1",@"2-2",@"2-3",@"2-4",@"2-5",@"2-6",@"2-7",@"2-8",@"2-9", nil];
-    [self addXInContext:ctx Scales:array];
+    [self addXInContext:ctx Scales:self.scalexX];
     /*
     NSLog(@"3-drawInContext:");
     NSLog(@"CGContext:%@",ctx);

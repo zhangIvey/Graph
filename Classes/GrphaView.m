@@ -51,14 +51,34 @@
 
 - (void)changeBaseLine
 {
+
+    CGPoint toPoint = CGPointMake(baseLineLayer.frame.size.width/2, 80);
+    [self moveBaseLineToPoint:toPoint];
+
+    NSArray *scalesX = [NSArray arrayWithObjects:@"3-6",@"3-7",@"3-8",@"3-9",@"3-10",@"3-11",@"3-12",@"3-13",@"3-14", nil];
+    [self graduationRefreshX:scalesX Y:nil];
+
+}
+
+
+/**
+ 变更基准线
+
+ @param point 基准线将要移动到的坐标
+ */
+- (void)moveBaseLineToPoint:(CGPoint)point
+{
     if (!baseLineLayer) {
         return;
     }
-    CGPoint toPoint = CGPointMake(baseLineLayer.frame.size.width/2, 80);
-    [baseLineLayer setPosition:toPoint];
+    [baseLineLayer setPosition:point];
+}
 
-    
-    [CAAnimation ]
+
+- (void)graduationRefreshX:(NSArray *)scalesX Y:(NSArray *)scalesY
+{
+    if (!graduationLayer) return;
+    [graduationLayer setScalexX:scalesX];
 }
 
 
@@ -80,17 +100,6 @@
 
     return backgroundLayer;
 }
-
-
-
-
-
-
-#pragma mark  绘制连接选段
-
-
-#pragma mark  设置渐变色
-
 
 /*
 // Only override drawRect: if you perform custom drawing.

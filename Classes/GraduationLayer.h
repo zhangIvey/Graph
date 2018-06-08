@@ -14,6 +14,7 @@
  */
 @interface GraduationLayer : CALayer
 
-
+@property(nonatomic, strong) NSArray *scalexX;
+@property(nonatomic, strong) NSArray *scalesY;
 
 @end
