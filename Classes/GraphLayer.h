@@ -7,10 +7,19 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-
+#import "RingLayer.h"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "ClickAreaLayer.h"
+#import "RingLayer.h"
 /**
- 折线图
+ 折线图类
  */
 @interface GraphLayer : CALayer
+{
+    NSMutableArray<RingLayer *> rings;
+}
+@property(nonatomic, strong) NSArray *stepsPercent;  //步数/10000
+
 
 @end

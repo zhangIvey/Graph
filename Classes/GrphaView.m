@@ -23,9 +23,18 @@
         UIColor *color2 = [UIColor colorWithRed:138/255.0 green:209/255.0 blue:243/255.0 alpha:1];
         [self.layer addSublayer:[self backgroundColorChangeFrom:color1 to:color2]];
 
+
+        //添加折线图图层
+        graphLayer = [[GraphLayer alloc] init];
+        graphLayer.frame = CGRectMake(0, 0, self.bounds.size.width, 300);
+        graphLayer.backgroundColor = [UIColor clearColor].CGColor;
+        [graphLayer setNeedsDisplay];
+        [self.layer addSublayer:graphLayer];
+
+
         //添加刻度
         graduationLayer = [[GraduationLayer alloc] init];
-        graduationLayer.backgroundColor = [UIColor grayColor].CGColor;
+        graduationLayer.backgroundColor = [UIColor clearColor].CGColor;
         graduationLayer.frame = CGRectMake(0, 0, self.bounds.size.width, 300);
         [graduationLayer setNeedsDisplay];
         [self.layer addSublayer:graduationLayer];
@@ -39,11 +48,15 @@
         [baseLineLayer setNeedsDisplay];
         [self.layer addSublayer:baseLineLayer];
 
+
+
+
         //添加点击事件
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeBaseLine)];
         tap.numberOfTapsRequired = 1;
         tap.numberOfTouchesRequired = 1;
         [self addGestureRecognizer:tap];
+
 
     }
     return self;
@@ -57,6 +70,7 @@
 
     NSArray *scalesX = [NSArray arrayWithObjects:@"3-6",@"3-7",@"3-8",@"3-9",@"3-10",@"3-11",@"3-12",@"3-13",@"3-14", nil];
     [self graduationRefreshX:scalesX Y:nil];
+
 
 }
 
@@ -75,6 +89,12 @@
 }
 
 
+/**
+ 变更坐标系
+
+ @param scalesX 横轴坐标刻度集合
+ @param scalesY 纵轴坐标刻度集合
+ */
 - (void)graduationRefreshX:(NSArray *)scalesX Y:(NSArray *)scalesY
 {
     if (!graduationLayer) return;
@@ -100,6 +120,24 @@
 
     return backgroundLayer;
 }
+
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    CGPoint point = [[touches anyObject] locationInView:self];
+    CALayer *layer = [self.layer hitTest:point];
+
+    for (int i = 0; i < [graphLayer sublayers].count; i++) {
+        CALayer *subLayer = (CALayer *)[[graphLayer sublayers] objectAtIndex:i];
+        if (layer == subLayer) {
+            subLayer.backgroundColor = [UIColor redColor].CGColor;
+        }else{
+            subLayer.backgroundColor = [UIColor clearColor].CGColor;
+        }
+    }
+
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.
