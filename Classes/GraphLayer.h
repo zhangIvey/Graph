@@ -17,7 +17,7 @@
  */
 @interface GraphLayer : CALayer
 {
-    NSMutableArray<RingLayer *> rings;
+    NSMutableArray<RingLayer *> *rings;
 }
 @property(nonatomic, strong) NSArray *stepsPercent;  //步数/10000
 

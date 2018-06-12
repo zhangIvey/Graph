@@ -50,17 +50,49 @@
 }
 
 
+- (void)addLine:(CGContextRef)ctx points:(NSArray *)point
+{
+
+//    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    float start_x = (self.bounds.size.width/point.count)/2;
+
+    CGPoint addLines[point.count];
+    for (int i = 0; i < point.count; i++) {
+        NSNumber *stepCount = (NSNumber *)[point objectAtIndex:i];
+        CGPoint point = CGPointMake(start_x + start_x * 2 * i, stepCount.floatValue/10000*100);
+        addLines[i].x = point.x+20;
+        addLines[i].y = point.y+20;
+    }
+
+
+    CGContextSetLineJoin(ctx, kCGLineJoinRound);
+    CGContextSetLineCap(ctx , kCGLineCapRound);
+    CGContextSetBlendMode(ctx, kCGBlendModeNormal);
+    CGContextBeginPath(ctx);
+    CGContextAddLines(ctx, addLines, point.count);
+
+//    CGContextSetRGBStrokeColor(ctx, 135.0/255.0, 232.0/255.0, 84.0/255.0, 1);
+    CGContextSetStrokeColorWithColor(ctx, [UIColor blackColor].CGColor);
+    CGContextSetLineWidth(ctx, 3);
+    CGContextStrokePath(ctx);
+
+
+}
+
+
 /**
  添加圆环
 
- @param points 圆环的圆心集合
+ @param pointYs 圆环的圆心集合
  */
-- (void)addRings:(NSArray *)points
+- (void)addRings:(NSArray *)pointYs
 {
-    NSLog(@"point = %@",points);
-    for (int i = 0; i < points.count; i++) {
-        float start_x = (self.bounds.size.width/points.count)/2;
-        CGRect rect = CGRectMake(start_x + start_x * 2 * i, 19000, 40, 40);
+    NSLog(@"point = %@",pointYs);
+
+    float start_x = (self.bounds.size.width/pointYs.count)/2;
+    for (int m = 0; m < pointYs.count; m++) {
+        NSNumber *stepCount = (NSNumber *)[pointYs objectAtIndex:m];
+        CGRect rect = CGRectMake(start_x + start_x * 2 * m, stepCount.floatValue/10000*100, 40, 40);
         [self addSublayer:[self drawRing:rect]];
     }
 }
@@ -102,32 +134,27 @@
 #pragma mark - 自定义视图
 -(void)drawInContext:(CGContextRef)ctx
 {
+
     NSLog(@"_stepsPercent = %@",self.stepsPercent);
     [self addClickArea:self.stepsPercent];
 
+    NSArray<NSNumber *> *stepsArray = [[NSArray alloc] initWithObjects:
+                           [NSNumber numberWithFloat:10000],
+                           [NSNumber numberWithFloat:1000],
+                           [NSNumber numberWithFloat:9000],
+                           [NSNumber numberWithFloat:3000],
+                           [NSNumber numberWithFloat:5000],
+                           [NSNumber numberWithFloat:10000],
+                           [NSNumber numberWithFloat:14000],
+                           [NSNumber numberWithFloat:18000],
+                           [NSNumber numberWithFloat:9000],
+                           nil];
 
-    NSArray *stepsArray = [NSArray arrayWithObjects:
-                           @12000,
-                           @10000,
-                           @2000,
-                           @5000,
-                           @16000,
-                           @20000,
-                           @8000,
-                           @9000,
-                           @14000, nil];
 
     NSLog(@"stepsArray = %@",stepsArray);
-    for (int i = 0; i < stepsArray.count; i ++) {
 
-        float x = []
-        
-        NSArray *points = [NSArray arrayWithObjects:@"", nil]
-    }
-
-
-
-    [self addRings:_stepsPercent];
+    [self addRings:stepsArray];
+    [self addLine:ctx points:stepsArray];
 }
 
 @end
