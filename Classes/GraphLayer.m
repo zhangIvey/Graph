@@ -50,10 +50,14 @@
 }
 
 
+/**
+ 绘制折线图
+
+ @param ctx 绘制折线图的上下文
+ @param point 折线图上的步数集合
+ */
 - (void)addLine:(CGContextRef)ctx points:(NSArray *)point
 {
-
-//    CGContextRef ctx = UIGraphicsGetCurrentContext();
     float start_x = (self.bounds.size.width/point.count)/2;
 
     CGPoint addLines[point.count];
@@ -63,20 +67,14 @@
         addLines[i].x = point.x+20;
         addLines[i].y = point.y+20;
     }
-
-
     CGContextSetLineJoin(ctx, kCGLineJoinRound);
     CGContextSetLineCap(ctx , kCGLineCapRound);
     CGContextSetBlendMode(ctx, kCGBlendModeNormal);
     CGContextBeginPath(ctx);
     CGContextAddLines(ctx, addLines, point.count);
-
-//    CGContextSetRGBStrokeColor(ctx, 135.0/255.0, 232.0/255.0, 84.0/255.0, 1);
     CGContextSetStrokeColorWithColor(ctx, [UIColor blackColor].CGColor);
     CGContextSetLineWidth(ctx, 3);
     CGContextStrokePath(ctx);
-
-
 }
 
 
