@@ -19,7 +19,7 @@
 {
     NSMutableArray<RingLayer *> *rings;
 }
-@property(nonatomic, strong) NSArray *stepsPercent;  //步数/10000
+@property(nonatomic, strong) NSArray<NSNumber *> *stepsPercent;  //步数/10000
 
 
 @end

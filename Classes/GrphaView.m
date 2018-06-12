@@ -65,13 +65,28 @@
 - (void)changeBaseLine
 {
 
+    //变更基准线
     CGPoint toPoint = CGPointMake(baseLineLayer.frame.size.width/2, 80);
     [self moveBaseLineToPoint:toPoint];
 
+    //更换坐标刻度
     NSArray *scalesX = [NSArray arrayWithObjects:@"3-6",@"3-7",@"3-8",@"3-9",@"3-10",@"3-11",@"3-12",@"3-13",@"3-14", nil];
     [self graduationRefreshX:scalesX Y:nil];
 
+    //重新绘制坐标原点和折线图
+    NSArray<NSNumber *> *steps = [[NSArray alloc] initWithObjects:
+                                  [NSNumber numberWithInteger:1000],
+                                  [NSNumber numberWithInteger:1500],
+                                  [NSNumber numberWithInteger:8000],
+                                  [NSNumber numberWithInteger:16000],
+                                  [NSNumber numberWithInteger:11000],
+                                  [NSNumber numberWithInteger:200000],
+                                  [NSNumber numberWithInteger:1000],
+                                  [NSNumber numberWithInteger:900],
+                                  [NSNumber numberWithInteger:3000],
+                                  nil];
 
+    [graphLayer setStepsPercent:steps];
 }
 
 

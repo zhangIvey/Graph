@@ -19,19 +19,30 @@
 {
     self = [super init];
     if (self) {
-        _stepsPercent = @[@100,
-                          @200,
-                          @300,
-                          @500,
-                          @600,
-                          @700,
-                          @900,
-                          @6000,
-                          @120];
+        _stepsPercent = [[NSArray alloc] initWithObjects:
+                                           [NSNumber numberWithFloat:10000],
+                                           [NSNumber numberWithFloat:1000],
+                                           [NSNumber numberWithFloat:9000],
+                                           [NSNumber numberWithFloat:3000],
+                                           [NSNumber numberWithFloat:5000],
+                                           [NSNumber numberWithFloat:10000],
+                                           [NSNumber numberWithFloat:14000],
+                                           [NSNumber numberWithFloat:18000],
+                                           [NSNumber numberWithFloat:9000],
+                                           nil];
 
         rings = [[NSMutableArray alloc] init];
+
+        [self addObserver:self forKeyPath:@"self.stepsPercent" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"self.stepsPercent"]) {
+        [self setNeedsDisplay];
+    }
 }
 
 /**
@@ -41,6 +52,7 @@
  */
 - (void)addClickArea:(NSArray *)areas
 {
+
     NSLog(@"areas = %@",areas);
     for (int i = 0; i < areas.count; i++) {
         float width = self.bounds.size.width/areas.count;
@@ -85,8 +97,8 @@
  */
 - (void)addRings:(NSArray *)pointYs
 {
-    NSLog(@"point = %@",pointYs);
 
+    NSLog(@"point = %@",pointYs);
     float start_x = (self.bounds.size.width/pointYs.count)/2;
     for (int m = 0; m < pointYs.count; m++) {
         NSNumber *stepCount = (NSNumber *)[pointYs objectAtIndex:m];
@@ -128,6 +140,12 @@
     return ringLayer;
 }
 
+//-(void)refreshGraph:(NSArray <NSNumber>) steps
+//{
+//    self.stepsPercent = steps;
+//    [self setNeedsDisplay];
+//}
+
 
 #pragma mark - 自定义视图
 -(void)drawInContext:(CGContextRef)ctx
@@ -136,23 +154,10 @@
     NSLog(@"_stepsPercent = %@",self.stepsPercent);
     [self addClickArea:self.stepsPercent];
 
-    NSArray<NSNumber *> *stepsArray = [[NSArray alloc] initWithObjects:
-                           [NSNumber numberWithFloat:10000],
-                           [NSNumber numberWithFloat:1000],
-                           [NSNumber numberWithFloat:9000],
-                           [NSNumber numberWithFloat:3000],
-                           [NSNumber numberWithFloat:5000],
-                           [NSNumber numberWithFloat:10000],
-                           [NSNumber numberWithFloat:14000],
-                           [NSNumber numberWithFloat:18000],
-                           [NSNumber numberWithFloat:9000],
-                           nil];
+    NSLog(@"stepsArray = %@",_stepsPercent);
 
-
-    NSLog(@"stepsArray = %@",stepsArray);
-
-    [self addRings:stepsArray];
-    [self addLine:ctx points:stepsArray];
+    [self addRings:self.stepsPercent];
+    [self addLine:ctx points:self.stepsPercent];
 }
 
 @end
