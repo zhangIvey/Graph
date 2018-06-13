@@ -151,23 +151,20 @@
     return backgroundLayer;
 }
 
-/*
+
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     CGPoint point = [[touches anyObject] locationInView:self];
-    CALayer *layer = [self.layer hitTest:point];
+    ClickAreaLayer *layer = (ClickAreaLayer *)[self.layer hitTest:point];
 
-    for (int i = 0; i < [graphLayer sublayers].count; i++) {
-        CALayer *subLayer = (CALayer *)[[graphLayer sublayers] objectAtIndex:i];
-        if (layer == subLayer) {
-            subLayer.backgroundColor = [UIColor redColor].CGColor;
-        }else{
-            subLayer.backgroundColor = [UIColor clearColor].CGColor;
-        }
-    }
+//    for (int i = 0; i < [graphLayer clickLayers].count; i++) {
+//        ClickAreaLayer *subLayer = (ClickAreaLayer *)[[graphLayer clickLayers] objectAtIndex:i];
+//        [subLayer setNeedsDisplay];
+//    }
+
 
 }
-*/
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -18,10 +18,10 @@
 @interface GraphLayer : CALayer
 {
     NSMutableArray<RingLayer *>         *rings;
-    NSMutableArray<ClickAreaLayer *>    *clickLayers;
+
     CAGradientLayer *graphColor;
 }
 @property(nonatomic, strong) NSArray<NSNumber *> *stepsPercent;  //步数/10000
-
+@property(nonatomic, strong) NSMutableArray<ClickAreaLayer *>    *clickLayers;
 
 @end

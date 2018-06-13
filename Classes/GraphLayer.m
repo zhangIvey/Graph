@@ -32,9 +32,7 @@
                                            nil];
 
         rings = [[NSMutableArray alloc] init];
-        clickLayers = [[NSMutableArray alloc] init];
-
-//        graphColor = [[CAGradientLayer alloc] init];
+        _clickLayers = [[NSMutableArray alloc] init];
 
         [self addObserver:self forKeyPath:@"self.stepsPercent" options:NSKeyValueObservingOptionNew context:nil];
     }
@@ -61,11 +59,11 @@
     for (int i = 0; i < areas.count; i++) {
         float width = self.bounds.size.width/areas.count;
         CGRect rect = CGRectMake(i*width, 0, width, self.bounds.size.height);
-        if (clickLayers.count >= i+1) {
+        if (_clickLayers.count >= i+1) {
 
         }else{
             ClickAreaLayer *areaLayer = [self drawClickArea:rect];
-            [clickLayers addObject:areaLayer];
+            [_clickLayers addObject:areaLayer];
             [self addSublayer:areaLayer];
         }
     }
@@ -205,6 +203,21 @@
     [clickAreaLayer setNeedsDisplay];
     return clickAreaLayer;
 }
+
+-(CALayer *)hitTest:(CGPoint)p
+{
+    NSLog(@"p.x = %f",p.x);
+    NSLog(@"p.y = %f",p.y);
+    ClickAreaLayer *areaLayer;
+    for (int i = 0; i < [self.clickLayers count]; i++) {
+        areaLayer = (ClickAreaLayer *)[self.clickLayers objectAtIndex:i];
+        if (areaLayer.frame.origin.x < p.x && p.x <= areaLayer.frame.origin.x+areaLayer.frame.size.width) {
+            [areaLayer hitTest:p];
+        }
+    }
+    return areaLayer;
+}
+
 
 
 /**

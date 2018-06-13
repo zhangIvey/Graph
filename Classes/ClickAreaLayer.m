@@ -16,16 +16,27 @@
     self = [super init];
     if (self) {
 
-        //添加手势
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]  initWithTarget:self action:@selector(clickArea)];
-        tap.numberOfTapsRequired = 1;
-        tap.numberOfTouchesRequired = 1;
+        [self addObserver:self forKeyPath:@"self.selectedColor" options:NSKeyValueObservingOptionNew context:nil];
 
-
+        _selectedColor = [UIColor clearColor];
+        backgroundLayer = [CAGradientLayer layer];
     }
     return self;
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"self.selectedColor"]) {
+        [self setNeedsDisplay];
+    }
+}
+
+-(CALayer *)hitTest:(CGPoint)p
+{
+    NSLog(@"便跟颜色");
+    self.selectedColor = [UIColor whiteColor];
+    return self;
+}
 
 /**
  设置数据图的背景色渐变效果
@@ -35,25 +46,33 @@
  */
 - (CAGradientLayer *)backgroundColorChangeFrom:(UIColor *)c1 betweenColor:(UIColor *)c2 to:(UIColor *)c3
 {
-    CAGradientLayer *backgroundLayer = [CAGradientLayer layer];
-    backgroundLayer.frame = self.bounds;
-    backgroundLayer.colors = @[(__bridge id)c1.CGColor,
-                               (__bridge id)c2.CGColor,
-                               (__bridge id)c3.CGColor
-                               ];
-    backgroundLayer.startPoint = CGPointMake(0.5, 0);
-    backgroundLayer.endPoint = CGPointMake(0.5, 1);
-    backgroundLayer.type = kCAGradientLayerAxial;
 
+        backgroundLayer.frame = self.bounds;
+        backgroundLayer.colors = @[(__bridge id)c1.CGColor,
+                                   (__bridge id)c2.CGColor,
+                                   (__bridge id)c3.CGColor
+                                   ];
+        backgroundLayer.startPoint = CGPointMake(0.5, 0);
+        backgroundLayer.endPoint = CGPointMake(0.5, 1);
+        backgroundLayer.type = kCAGradientLayerAxial;
     return backgroundLayer;
 }
 
 
+/**
+ 高亮一下
+ */
+- (void)shine
+{
+
+}
 
 
 -(void)drawInContext:(CGContextRef)ctx
 {
 
-     [self addSublayer:[self backgroundColorChangeFrom:[UIColor clearColor] betweenColor:[UIColor clearColor] to:[UIColor clearColor]]];
+    CAGradientLayer *backgroudColorLayer = [self backgroundColorChangeFrom:[UIColor clearColor] betweenColor:self.selectedColor to:[UIColor clearColor]];
+    [self addSublayer:backgroudColorLayer];
+    
 }
 @end
