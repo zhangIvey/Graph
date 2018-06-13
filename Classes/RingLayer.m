@@ -18,9 +18,8 @@
     //清空填充色
     trackLayer.fillColor = [UIColor whiteColor].CGColor;
     //设置画笔颜色 即圆环背景色
-//    trackLayer.strokeColor =  [UIColor colorWithRed:170/255.0 green:210/255.0 blue:254/255.0 alpha:1].CGColor;
     trackLayer.strokeColor = [UIColor orangeColor].CGColor;
-    trackLayer.lineWidth = 2;
+    trackLayer.lineWidth = 3;
     //设置画笔路径
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:point radius:r startAngle:- M_PI_2 endAngle:-M_PI_2 + M_PI * 2 clockwise:YES];
     //path 决定layer将被渲染成何种形状

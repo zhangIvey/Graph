@@ -24,12 +24,7 @@
         [self.layer addSublayer:[self backgroundColorChangeFrom:color1 to:color2]];
 
 
-        //添加折线图图层
-        graphLayer = [[GraphLayer alloc] init];
-        graphLayer.frame = CGRectMake(0, 0, self.bounds.size.width, 300);
-        graphLayer.backgroundColor = [UIColor clearColor].CGColor;
-        [graphLayer setNeedsDisplay];
-        [self.layer addSublayer:graphLayer];
+
 
 
         //添加刻度
@@ -49,24 +44,44 @@
         [self.layer addSublayer:baseLineLayer];
 
 
+        //添加折线图图层
+        graphLayer = [[GraphLayer alloc] init];
+        graphLayer.frame = CGRectMake(0, 0, self.bounds.size.width, 300);
+        graphLayer.backgroundColor = [UIColor clearColor].CGColor;
+        [graphLayer setNeedsDisplay];
+        [self.layer addSublayer:graphLayer];
 
 
         //添加点击事件
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeBaseLine)];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectedOneDay)];
         tap.numberOfTapsRequired = 1;
         tap.numberOfTouchesRequired = 1;
         [self addGestureRecognizer:tap];
+
+
+        //滑动切换数据
+        UISwipeGestureRecognizer *swipeLeftGesture= [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(refreshData)];
+        swipeLeftGesture.direction=UISwipeGestureRecognizerDirectionRight | UISwipeGestureRecognizerDirectionLeft;
+        [self addGestureRecognizer:swipeLeftGesture];
 
 
     }
     return self;
 }
 
-- (void)changeBaseLine
+
+- (void)selectedOneDay
+{
+    NSLog(@"选中某一天");
+
+}
+
+
+- (void)refreshData
 {
 
     //变更基准线
-    CGPoint toPoint = CGPointMake(baseLineLayer.frame.size.width/2, 80);
+    CGPoint toPoint = CGPointMake(baseLineLayer.frame.size.width/2, arc4random() % 300);
     [self moveBaseLineToPoint:toPoint];
 
     //更换坐标刻度
@@ -75,15 +90,15 @@
 
     //重新绘制坐标原点和折线图
     NSArray<NSNumber *> *steps = [[NSArray alloc] initWithObjects:
-                                  [NSNumber numberWithInteger:1000],
-                                  [NSNumber numberWithInteger:1500],
-                                  [NSNumber numberWithInteger:8000],
-                                  [NSNumber numberWithInteger:16000],
-                                  [NSNumber numberWithInteger:11000],
-                                  [NSNumber numberWithInteger:200000],
-                                  [NSNumber numberWithInteger:1000],
-                                  [NSNumber numberWithInteger:900],
-                                  [NSNumber numberWithInteger:3000],
+                                  [NSNumber numberWithInteger:arc4random() % 10000],
+                                  [NSNumber numberWithInteger:arc4random() % 10000],
+                                  [NSNumber numberWithInteger:arc4random() % 10000],
+                                  [NSNumber numberWithInteger:arc4random() % 10000],
+                                  [NSNumber numberWithInteger:arc4random() % 10000],
+                                  [NSNumber numberWithInteger:arc4random() % 10000],
+                                  [NSNumber numberWithInteger:arc4random() % 10000],
+                                  [NSNumber numberWithInteger:arc4random() % 10000],
+                                  [NSNumber numberWithInteger:arc4random() % 10000],
                                   nil];
 
     [graphLayer setStepsPercent:steps];
@@ -136,7 +151,7 @@
     return backgroundLayer;
 }
 
-
+/*
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     CGPoint point = [[touches anyObject] locationInView:self];
@@ -152,7 +167,7 @@
     }
 
 }
-
+*/
 
 /*
 // Only override drawRect: if you perform custom drawing.

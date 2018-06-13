@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "BaseLineLayer.h"
 #import "GraphLayer.h"
+#import <math.h>
 /**
  视图层
  */

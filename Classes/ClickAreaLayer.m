@@ -10,11 +10,11 @@
 
 @implementation ClickAreaLayer
 
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-
 
         //添加手势
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]  initWithTarget:self action:@selector(clickArea)];
@@ -25,6 +25,7 @@
     }
     return self;
 }
+
 
 /**
  设置数据图的背景色渐变效果
@@ -48,19 +49,11 @@
 }
 
 
-/**
- 响应点击事件
- */
-- (void)clickArea
-{
-
-}
-
 
 
 -(void)drawInContext:(CGContextRef)ctx
 {
 
-     [self addSublayer:[self backgroundColorChangeFrom:[UIColor clearColor] betweenColor:[UIColor whiteColor] to:[UIColor clearColor]]];
+     [self addSublayer:[self backgroundColorChangeFrom:[UIColor clearColor] betweenColor:[UIColor clearColor] to:[UIColor clearColor]]];
 }
 @end
