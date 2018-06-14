@@ -154,14 +154,14 @@
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+
     CGPoint point = [[touches anyObject] locationInView:self];
-    ClickAreaLayer *layer = (ClickAreaLayer *)[self.layer hitTest:point];
+    [self.layer hitTest:point];
 
-//    for (int i = 0; i < [graphLayer clickLayers].count; i++) {
-//        ClickAreaLayer *subLayer = (ClickAreaLayer *)[[graphLayer clickLayers] objectAtIndex:i];
-//        [subLayer setNeedsDisplay];
-//    }
+}
 
+-(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
 
 }
 
