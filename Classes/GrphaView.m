@@ -25,8 +25,6 @@
 
 
 
-
-
         //添加刻度
         graduationLayer = [[GraduationLayer alloc] init];
         graduationLayer.backgroundColor = [UIColor clearColor].CGColor;
@@ -51,9 +49,12 @@
         [graphLayer setNeedsDisplay];
         [self.layer addSublayer:graphLayer];
 
+        //移动游标
+        
+
 
         //添加点击事件
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectedOneDay)];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectedOneDay:)];
         tap.numberOfTapsRequired = 1;
         tap.numberOfTouchesRequired = 1;
         [self addGestureRecognizer:tap];
@@ -70,10 +71,12 @@
 }
 
 
-- (void)selectedOneDay
+- (void)selectedOneDay:(id)object
 {
     NSLog(@"选中某一天");
-
+    UITapGestureRecognizer *tap = (UITapGestureRecognizer *)object;
+    CGPoint point =[tap locationOfTouch:0 inView:self];
+    [self.layer hitTest:point];
 }
 
 
@@ -152,18 +155,42 @@
 }
 
 
+#pragma mark touchEvent delegate methods
+/*
+bool swipeFlag = NO; //是否是滑动
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-
-    CGPoint point = [[touches anyObject] locationInView:self];
-    [self.layer hitTest:point];
-
+    NSLog(@"touchesBegan");
+    if (swipeFlag) {
+        NSLog(@"是滑动");
+    }else{
+        NSLog(@"非滑动");
+    }
+//    if (event.subtype == UIEventTypePresses) {
+//        NSLog(@"touches = %@",touches);
+//
+//        CGPoint point = [[touches anyObject] locationInView:self];
+//        [self.layer hitTest:point];
+//    }
 }
 
 -(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-
+    NSLog(@"touchesMoved");
+//    swipeFlag = YES;
 }
+-(void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    NSLog(@"touchesEnded");
+    if (!swipeFlag) {
+        NSLog(@"touches = %@",touches);
+        CGPoint point = [[touches anyObject] locationInView:self];
+        [self.layer hitTest:point];
+    }else{
+        NSLog(@"是滑动手势");
+    }
+}
+ */
 
 
 /*
