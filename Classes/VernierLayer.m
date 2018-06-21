@@ -14,22 +14,19 @@
 {
     self = [super init];
     if (self) {
-
+        image = [UIImage imageNamed:@"location"];
     }
     return self;
 }
 
 -(void)drawInContext:(CGContextRef)ctx
 {
-    // 绘图
-    CGContextSaveGState(ctx);
-    // 图形上下文形变，避免图片倒立显示
-    CGContextScaleCTM(ctx, 1.0, -1.0);
-    CGContextTranslateCTM(ctx, 0.0, -150.0);
-    // 图片
-    UIImage *image = [UIImage imageNamed:@"location"];
-    CGContextDrawImage(ctx, CGRectMake(0.0, 0.0, 15.0, 20.0), image.CGImage);
-    CGContextRestoreGState(ctx);
+    CGRect imageRect;
+    imageRect.origin = CGPointMake(0.0, 0.0);
+    imageRect.size = self.bounds.size;
+    CGContextScaleCTM(ctx, 1, -1);
+    CGContextTranslateCTM(ctx, 0, -self.bounds.size.height);
+    CGContextDrawImage(ctx, imageRect, image.CGImage);
 }
 
 @end

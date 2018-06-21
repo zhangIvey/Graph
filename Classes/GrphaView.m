@@ -52,9 +52,8 @@
         //移动游标
         vernierLayer = [[VernierLayer alloc] init];
         vernierLayer.frame = CGRectMake(0, 0, 15, 20);
-        vernierLayer.backgroundColor = [UIColor blueColor].CGColor;
+         [vernierLayer setHidden:YES];
         [vernierLayer setNeedsDisplay];
-        [vernierLayer setHidden:YES];
         [self.layer addSublayer:vernierLayer];
 
 

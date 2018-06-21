@@ -60,7 +60,7 @@
         float width = self.bounds.size.width/9;
         CGRect rect = CGRectMake(i*width, 0, width, self.bounds.size.height);
         if (_clickLayers.count >= i+1) {
-
+            
         }else{
             ClickAreaLayer *areaLayer = [self drawClickArea:rect];
             [_clickLayers addObject:areaLayer];
