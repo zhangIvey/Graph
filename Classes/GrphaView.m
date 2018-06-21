@@ -50,7 +50,13 @@
         [self.layer addSublayer:graphLayer];
 
         //移动游标
-        
+        vernierLayer = [[VernierLayer alloc] init];
+        vernierLayer.frame = CGRectMake(0, 0, 15, 20);
+        vernierLayer.backgroundColor = [UIColor blueColor].CGColor;
+        [vernierLayer setNeedsDisplay];
+        [vernierLayer setHidden:YES];
+        [self.layer addSublayer:vernierLayer];
+
 
 
         //添加点击事件
@@ -74,21 +80,30 @@
 - (void)selectedOneDay:(id)object
 {
     NSLog(@"选中某一天");
+    //高亮显示某一天
     UITapGestureRecognizer *tap = (UITapGestureRecognizer *)object;
     CGPoint point =[tap locationOfTouch:0 inView:self];
     [self.layer hitTest:point];
+
+    //控制和显示游标位置
+    if ([vernierLayer isHidden]) {
+        [vernierLayer setHidden:NO];
+    }
+
 }
 
 
 - (void)refreshData
 {
+    //取出游标
+    [vernierLayer setHidden:YES];
 
     //变更基准线
     CGPoint toPoint = CGPointMake(baseLineLayer.frame.size.width/2, arc4random() % 300);
     [self moveBaseLineToPoint:toPoint];
 
     //更换坐标刻度
-    NSArray *scalesX = [NSArray arrayWithObjects:@"3-6",@"3-7",@"3-8",@"3-9",@"3-10",@"3-11",@"3-12",@"3-13",@"3-14", nil];
+    NSArray *scalesX = [NSArray arrayWithObjects:@"3-4",@"3-5",@"3-6",@"3-7",@"3-8",@"3-9",@"3-10",@"3-11",@"3-12",@"3-13",@"3-14", nil];
     [self graduationRefreshX:scalesX Y:nil];
 
     //重新绘制坐标原点和折线图
@@ -102,9 +117,15 @@
                                   [NSNumber numberWithInteger:arc4random() % 10000],
                                   [NSNumber numberWithInteger:arc4random() % 10000],
                                   [NSNumber numberWithInteger:arc4random() % 10000],
+                                  [NSNumber numberWithInteger:arc4random() % 10000],
+                                  [NSNumber numberWithInteger:arc4random() % 10000],
                                   nil];
 
     [graphLayer setStepsPercent:steps];
+
+
+
+
 }
 
 

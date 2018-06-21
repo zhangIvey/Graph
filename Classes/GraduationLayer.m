@@ -16,7 +16,7 @@
 {
     self = [super init];
     if (self) {
-        _scalexX = [NSArray arrayWithObjects:@"2-1",@"2-2",@"2-3",@"2-4",@"2-5",@"2-6",@"2-7",@"2-8",@"2-9", nil];
+        _scalexX = [NSArray arrayWithObjects:@"2-1",@"2-2",@"2-3",@"2-4",@"2-5",@"2-6",@"2-7",@"2-8",@"2-9",@"2-10",@"2-11", nil];
 
         [self addObserver:self forKeyPath:@"self.scalexX" options:NSKeyValueObservingOptionNew context:nil];
 
@@ -44,10 +44,10 @@
 - (void)addXInContext:(CGContextRef)ctx Scales:(NSArray *)scales
 {
     //添加刻度
-    float scaleLabelWidth = self.bounds.size.width/[scales count];
+    float scaleLabelWidth = -self.bounds.size.width/([scales count]-2);
     float scaleLabelHeith = 40;
     for (int i = 0; i < [scales count]; i ++) {
-        CGRect rect = CGRectMake(i*scaleLabelWidth, self.bounds.size.height - 40, scaleLabelWidth, scaleLabelHeith);
+        CGRect rect = CGRectMake(scaleLabelWidth + fabsf(i*scaleLabelWidth), self.bounds.size.height - 40, scaleLabelWidth, scaleLabelHeith);
         [scaleXLabels addObject:[self scaleLabelInit:rect scale:(NSString *)[scales objectAtIndex:i]]];
         [self addSublayer:[self scaleLabelInit:rect scale:(NSString *)[scales objectAtIndex:i]]];
     }

@@ -12,6 +12,7 @@
 #import "BaseLineLayer.h"
 #import "GraphLayer.h"
 #import <math.h>
+#import "VernierLayer.h"
 /**
  视图层
  */
@@ -21,7 +22,7 @@
     BaseLineLayer   *baseLineLayer;     //基准线
     GraphLayer      *graphLayer;        //折线图
     
-
+    VernierLayer    *vernierLayer;      //横轴上的游标
 }
 
 

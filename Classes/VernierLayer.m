@@ -10,6 +10,15 @@
 
 @implementation VernierLayer
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+
+    }
+    return self;
+}
+
 -(void)drawInContext:(CGContextRef)ctx
 {
     // 绘图
@@ -18,8 +27,8 @@
     CGContextScaleCTM(ctx, 1.0, -1.0);
     CGContextTranslateCTM(ctx, 0.0, -150.0);
     // 图片
-    UIImage *image = [UIImage imageNamed:@"header"];
-    CGContextDrawImage(ctx, CGRectMake(0.0, 0.0, 150.0, 150.0), image.CGImage);
+    UIImage *image = [UIImage imageNamed:@"location"];
+    CGContextDrawImage(ctx, CGRectMake(0.0, 0.0, 15.0, 20.0), image.CGImage);
     CGContextRestoreGState(ctx);
 }
 
