@@ -56,27 +56,13 @@
         backgroundLayer.startPoint = CGPointMake(0.5, 0);
         backgroundLayer.endPoint = CGPointMake(0.5, 1);
         backgroundLayer.type = kCAGradientLayerAxial;
-//        backgroundLayer.hidden = YES;
         backgroundLayer.opaque = NO;
     return backgroundLayer;
 }
 
 
-
-/**
- 高亮一下
- */
-- (void)shine
-{
-
-//    backgroundLayer.hidden = YES;
-}
-
-
 -(void)drawInContext:(CGContextRef)ctx
 {
-
-
 
     CAGradientLayer *backgroudColorLayer = [self backgroundColorChangeFrom:[UIColor clearColor] betweenColor:self.selectedColor to:[UIColor clearColor]];
     [self addSublayer:backgroudColorLayer];

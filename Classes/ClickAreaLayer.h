@@ -17,6 +17,7 @@
 @interface ClickAreaLayer : CALayer
 {
     CAGradientLayer  *backgroundLayer;
+
 }
 
 @property(nonatomic, strong) UIColor  *selectedColor;

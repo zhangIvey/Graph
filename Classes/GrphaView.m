@@ -19,9 +19,9 @@
         self.userInteractionEnabled = YES;
 
         //添加背景图层
-        UIColor *color1 = [UIColor colorWithRed:1/225.0 green:160/255.0 blue:241/255.0 alpha:1];
-        UIColor *color2 = [UIColor colorWithRed:138/255.0 green:209/255.0 blue:243/255.0 alpha:1];
-        [self.layer addSublayer:[self backgroundColorChangeFrom:color1 to:color2]];
+//        UIColor *color1 = [UIColor colorWithRed:1/225.0 green:160/255.0 blue:241/255.0 alpha:1];
+//        UIColor *color2 = [UIColor colorWithRed:138/255.0 green:209/255.0 blue:243/255.0 alpha:1];
+//        [self.layer addSublayer:[self backgroundColorChangeFrom:color1 to:color2]];
 
 
 
@@ -51,7 +51,8 @@
 
         //移动游标
         vernierLayer = [[VernierLayer alloc] init];
-        vernierLayer.frame = CGRectMake(0, 0, 15, 20);
+        vernierLayer.frame = CGRectMake(0, graduationLayer.frame.size.height - 10, 15, 20);
+        vernierLayer.position = CGPointMake((self.bounds.size.width/9)/2, graduationLayer.frame.size.height - 20);
          [vernierLayer setHidden:YES];
         [vernierLayer setNeedsDisplay];
         [self.layer addSublayer:vernierLayer];
@@ -82,13 +83,36 @@
     //高亮显示某一天
     UITapGestureRecognizer *tap = (UITapGestureRecognizer *)object;
     CGPoint point =[tap locationOfTouch:0 inView:self];
-    [self.layer hitTest:point];
+    [self shineArea:point];
+    [self moveVernierToAreaPoint:point];
+    
+}
 
+
+/**
+ 移动游标到点击的坐标所在刻度
+
+ @param point 点击到的点坐标
+ */
+- (void)moveVernierToAreaPoint:(CGPoint) point
+{
+    float areaLayerWidth = self.bounds.size.width/9;
     //控制和显示游标位置
     if ([vernierLayer isHidden]) {
         [vernierLayer setHidden:NO];
     }
+    float x = (int)(point.x/areaLayerWidth)*areaLayerWidth+areaLayerWidth/2;
+    vernierLayer.position = CGPointMake(x, graduationLayer.frame.size.height - 10);
+}
 
+/**
+ 选中的矩形区域高亮显示
+
+ @param point : 点击到点坐标
+ */
+- (void)shineArea:(CGPoint)point
+{
+     [self.layer hitTest:point];
 }
 
 
@@ -161,6 +185,7 @@
  @param c1 开始的色值
  @param c2 渐变之后的色值
  */
+/*
 - (CAGradientLayer *)backgroundColorChangeFrom:(UIColor *)c1 to:(UIColor *)c2
 {
     CAGradientLayer *backgroundLayer = [CAGradientLayer layer];
@@ -173,6 +198,8 @@
 
     return backgroundLayer;
 }
+ */
+
 
 
 #pragma mark touchEvent delegate methods
